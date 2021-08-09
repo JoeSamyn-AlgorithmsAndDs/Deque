@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/joesamyn/Projects/C++/Deque/build",
+  "command": "/usr/bin/clang++   -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -o CMakeFiles/deque.dir/src/main.cpp.o -c /Users/joesamyn/Projects/C++/Deque/src/main.cpp",
+  "file": "/Users/joesamyn/Projects/C++/Deque/src/main.cpp"
+}
+]
