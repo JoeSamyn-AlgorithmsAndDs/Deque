@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/deque.dir/src/main.cpp.o"
   "CMakeFiles/deque.dir/src/main.cpp.o.d"
-  "deque"
-  "deque.pdb"
+  "libdeque.a"
+  "libdeque.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

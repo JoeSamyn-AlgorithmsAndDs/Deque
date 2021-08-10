@@ -1,1 +1,2 @@
-/usr/bin/clang++ -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/deque.dir/src/main.cpp.o -o deque 
+/usr/bin/ar qc libdeque.a CMakeFiles/deque.dir/src/main.cpp.o
+/usr/bin/ranlib libdeque.a
