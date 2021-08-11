@@ -1,2 +1,0 @@
-/usr/bin/ar qc libdeque.a CMakeFiles/deque.dir/src/main.cpp.o
-/usr/bin/ranlib libdeque.a
