@@ -7,11 +7,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE})
 # Set the project properties
 project(Deque LANGUAGES CXX VERSION 1.0 DESCRIPTION "Deque implementation in C++.")
 
+# Add header variable
+set(HDIR ${CMAKE_SOURCE_DIR}/include/deque)
+
+set(HFILES ${HDIR}/deque_a.h
+        ${HDIR}/deque_ll.h)
+
 # Set source files
-set(SRC src/deque_a.cpp 
+set(SRCS src/deque_a.cpp 
         src/deque_ll.cpp)
 
 # Add executable targets to be built by CMake
-add_library(deque src/main.cpp)
-
-# CMake page 2
+add_library(deque ${SRCS})
