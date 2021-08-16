@@ -1,6 +1,8 @@
 #ifndef DEQUEA_H
 #define DEQUEA_H
 
+#include <iostream>
+
 /**
  * Deque implementation using an array as underlying data structure
  */ 
@@ -57,6 +59,14 @@ public:
      * @return item removed from the deque
      */ 
     int removeLast();
+
+    /**
+     * Print the contents of the deque to the console
+     * 
+     * @param
+     * @return 
+     */
+    void show();
 
 /* Private Methods */
 private:

@@ -32,6 +32,18 @@ void DequeA::addLast(int item){
     this->count++;
 }
 
+void DequeA::show(){
+
+    // Iterate through list and print contents one at a time
+    for(int i = 0; i < this->count; i++){
+        std::cout << this->deque[i] << " ";
+    }
+
+    std::cout << std::endl;
+}
+
+int DequeA::size() { return this->count; }
+
 /* Private Methods */
 
 void DequeA::increaseSize(){

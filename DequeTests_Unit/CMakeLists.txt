@@ -18,5 +18,8 @@ target_link_libraries(${BINARY} PRIVATE deque Catch2::Catch2WithMain)
 # include header files 
 target_include_directories(${BINARY} PRIVATE ${CMAKE_SOURCE_DIR}/DequeLib/src)
 
-# add cmake test 
-add_test(NAME ${BINARY} COMMAND ${BINARY})
+# add cmake test
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/Catch2/extras) 
+include(CTest)
+include(Catch)
+catch_discover_tests(${BINARY} REPORTER console)
