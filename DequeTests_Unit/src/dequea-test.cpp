@@ -5,9 +5,11 @@
 TEST_CASE("DequeA Tests", "[AddLast]"){
     DequeA deque;
     
-    SECTION("Add Last"){
+    SECTION("AddLast"){
         deque.addLast(1);
+        deque.addLast(1);
+        deque.addLast(2);
         deque.show();
-        REQUIRE(deque.size() == 1);
+        REQUIRE(deque.size() == 3);
     }
 }

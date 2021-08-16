@@ -10,10 +10,36 @@ class DequeA {
 
 /* Private Variables */
 private:
+    /**
+     * Total number of items in the deque
+     */
     int count;
+
+    /**
+     * The current top index in the deque
+     */
     int top;
+
+    /**
+     * The current bottom index in the deque
+     */
     int bottom;
+
+    /**
+     * Current length of the array being used to hold deque values
+     */
     int length;
+
+    /**
+     * Flag used to insert items in the top of the deque. 
+     * Gets flipped to negative one when top index moves to back of array
+     * to allow ciclical insert
+     */
+    int insertFlag;
+
+    /**
+     *  Array pointer that points to underlying array being used for deque implementation
+     */
     int* deque;
 
 public:

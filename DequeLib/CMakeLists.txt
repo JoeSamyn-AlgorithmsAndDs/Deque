@@ -1,3 +1,6 @@
+# Set the minimum required CMake version
+cmake_minimum_required(VERSION 3.16.0)
+
 # Set executable output directory variable
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/DequeLib/bin/${CMAKE_BUILD_TYPE})
 
@@ -23,11 +26,3 @@ add_library(deque ${SRCS} ${HFILES})
 set_target_properties(deque PROPERTIES
         ARCHIVE_OUTPUT_DIRECTORY ${LIB}
         LIBRARY_OUTPUT_DIRECTORY ${LIB})
-
-# install the public header files in the public include directory
-install(FILES ${HFILES} DESTINATION ${HDIR})
-
-# insall public headers and lib files in proper location for distribution
-install(TARGETS deque
-        LIBRARY DESTINATION ${LIB}
-        ARCHIVE DESTINATION ${LIB})
