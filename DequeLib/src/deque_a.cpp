@@ -9,6 +9,7 @@
 DequeA::DequeA(){
     this->deque = new int[1];
     this->top = this->bottom = this->count = 0;
+    this->insertFlag = 1;
     this->length = 1;
 }
 
@@ -34,26 +35,35 @@ void DequeA::addLast(int item){
 
 void DequeA::addFirst(int item){
 
+    // If first value add to first index
+    if(this->count == 0) {
+        this->deque[this->top] = item;
+        this->count++;
+        return;
+    }
+
     // Increase size if array is full using repeated doubling
     if(this->count == this->length){
         this->increaseSize();
     }
 
-    // Flip flag to start adding from back of array
+    // If at index 0, move to back and begin adding values
     if(this->top == 0){
         this->insertFlag = this->insertFlag * -1;
-        this->top = 0;
+        this->top = this->length - 1;
     }
+    // Move top to next index
+    else this->top += this->insertFlag;
 
+    // Insert item into deque and increment count
     this->deque[this->top] = item;
-    this->top += this->insertFlag;
     this->count++;
 }
 
 void DequeA::show(){
 
     // Iterate through list and print contents one at a time
-    for(int i = 0; i < this->count; i++){
+    for(int i = 0; i < this->length; i++){
         std::cout << this->deque[i] << " ";
     }
 
@@ -69,7 +79,7 @@ void DequeA::increaseSize(){
     int* new_deque = new int[this->length];
     
     // Move items into new array
-    for(int i = 0; i <= this->count; i++){
+    for(int i = 0; i < this->count; i++){
         // Reset top if needed since using a circular array
         if(this->top >= this->count) this->top = 0;
 
@@ -82,5 +92,6 @@ void DequeA::increaseSize(){
     delete[] this->deque;
     this->deque = new_deque;
     this->top = 0;
+    this->insertFlag = 1;
     this->bottom = this->count;
 }

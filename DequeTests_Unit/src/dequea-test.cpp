@@ -12,4 +12,12 @@ TEST_CASE("DequeA Tests", "[AddLast]"){
         deque.show();
         REQUIRE(deque.size() == 3);
     }
+
+    SECTION("AddFirst"){
+        deque.addFirst(1);
+        deque.addFirst(2);
+        deque.addFirst(3);
+        deque.show();
+        REQUIRE(deque.size() == 3);
+    }
 }
