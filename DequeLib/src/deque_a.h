@@ -103,6 +103,22 @@ private:
      * @return
      */
     void increaseSize();
+
+    /**
+     * Decrease the size of the array to half its current length
+     * 
+     * @param
+     * @return
+     */
+    void decreaseSize();
+
+    /**
+     * Copy array contents from deque into new array
+     * 
+     * @param
+     * @return pointer to newly created array
+     */
+    int* copyArray();
 };
 
 #endif

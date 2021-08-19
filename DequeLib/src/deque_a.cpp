@@ -60,6 +60,26 @@ void DequeA::addFirst(int item){
     this->count++;
 }
 
+int DequeA::removeFirst(){
+    // Check count != 0
+    if(this->count == 0) return -1;
+
+    // pop value off deque
+    int val = this->deque[this->top];
+    this->deque[this->top] = -1;
+
+    if(this->top == this->length - 1) this->top = 0;
+
+    // if size count is 1/4 length decrease size 
+    if(this->count == this->length/2){
+        this->decreaseSize();
+    }
+
+    this->count--;
+
+    return 0;
+}
+
 void DequeA::show(){
 
     // Iterate through list and print contents one at a time
@@ -76,6 +96,26 @@ int DequeA::size() { return this->count; }
 
 void DequeA::increaseSize(){
     this->length = this->length*2;
+
+    // Delete old deque from memory to prevent memory leaks
+    this->deque = this->copyArray();
+    this->top = 0;
+    this->insertFlag = 1;
+    this->bottom = this->count;
+}
+
+void DequeA::decreaseSize(){
+    this->length = this->length / 2;
+
+    this->deque = this->copyArray();
+    this->top = 0;
+    this->insertFlag = 1;
+    this->bottom = this->count;
+}
+
+int* DequeA::copyArray(){
+
+    // Create new array for deque
     int* new_deque = new int[this->length];
     
     // Move items into new array
@@ -88,10 +128,7 @@ void DequeA::increaseSize(){
         this->top++;
     }
 
-    // Delete old deque from memory to prevent memory leaks
+    // Delete old deque array pointer
     delete[] this->deque;
-    this->deque = new_deque;
-    this->top = 0;
-    this->insertFlag = 1;
-    this->bottom = this->count;
+    return new_deque;
 }
