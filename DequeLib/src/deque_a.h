@@ -94,6 +94,14 @@ public:
      */
     void show();
 
+    /**
+     * Get the length of the underlying array data structure
+     * 
+     * @param
+     * @return length of array
+     */
+    int arrayLength();
+
 /* Private Methods */
 private:
     /**

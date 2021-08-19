@@ -65,19 +65,37 @@ int DequeA::removeFirst(){
     if(this->count == 0) return -1;
 
     // pop value off deque
-    int val = this->deque[this->top];
+    int popped = this->deque[this->top];
     this->deque[this->top] = -1;
 
     if(this->top == this->length - 1) this->top = 0;
+    else this->top += this->insertFlag*-1;
 
     // if size count is 1/4 length decrease size 
-    if(this->count == this->length/2){
+    if(this->count == this->length/4){
         this->decreaseSize();
     }
 
     this->count--;
 
-    return 0;
+    return popped;
+}
+
+int DequeA::removeLast(){
+    // Ensure deque is not empty before attempting to remove value
+    if(this->count == 0) return -1;
+
+    int popped = this->deque[this->bottom];
+    this->deque[this->bottom] = -1;
+
+    // if size count is 1/4 length decrease size 
+    if(this->count == this->length/4){
+        this->decreaseSize();
+    }
+
+    this->bottom--;
+    this->count--;
+    return popped;
 }
 
 void DequeA::show(){
@@ -92,8 +110,11 @@ void DequeA::show(){
 
 int DequeA::size() { return this->count; }
 
+int DequeA::arrayLength() { return this->length; }
+
 /* Private Methods */
 
+//TODO: Double check bottom is being set correctly after resize
 void DequeA::increaseSize(){
     this->length = this->length*2;
 
