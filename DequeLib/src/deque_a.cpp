@@ -9,13 +9,12 @@
 DequeA::DequeA(){
     this->deque = new int[1];
     this->top = this->bottom = this->count = 0;
-    this->insertFlag = 1;
     this->length = 1;
 }
 
 // Cleanup pointers
 DequeA::~DequeA(){
-    delete[] this->deque;
+    delete[] deque;
 }
 
 /* Public method implementations */
@@ -23,133 +22,127 @@ DequeA::~DequeA(){
 void DequeA::addLast(int item){
     
     // Array full, double size and move elements
-    if(this->count == this->length){
-        this->increaseSize();
+    if(count == length){
+        increaseSize();
     }
 
+    // If bottom at last index, check if item can be added to front of array
+    if(bottom == length - 1 && deque[top] != -1) bottom = 0;
+
     // Add item
-    this->deque[this->bottom] = item;
-    this->bottom++;
-    this->count++;
+    deque[bottom] = item;
+    bottom++;
+    count++;
 }
 
 void DequeA::addFirst(int item){
 
-    // If first value add to first index
-    if(this->count == 0) {
-        this->deque[this->top] = item;
-        this->count++;
-        return;
-    }
+    // If array full, resize
+    if(count == length) increaseSize();
 
-    // Increase size if array is full using repeated doubling
-    if(this->count == this->length){
-        this->increaseSize();
-    }
+    show();
 
-    // If at index 0, move to back and begin adding values
-    if(this->top == 0){
-        this->insertFlag = this->insertFlag * -1;
-        this->top = this->length - 1;
-    }
-    // Move top to next index
-    else this->top += this->insertFlag;
+    if(top <= 0 && deque[length - 1] == -1) top = length - 1;
 
     // Insert item into deque and increment count
-    this->deque[this->top] = item;
-    this->count++;
+    deque[top] = item;
+    top--;
+    count++;
+
+    show();
 }
 
 int DequeA::removeFirst(){
     // Check count != 0
-    if(this->count == 0) return -1;
+    if(count == 0) return -1;
 
     // pop value off deque
-    int popped = this->deque[this->top];
-    this->deque[this->top] = -1;
+    int popped = deque[top];
+    deque[top] = -1;
 
-    if(this->top == this->length - 1) this->top = 0;
-    else this->top += this->insertFlag*-1;
+    if(top == length - 1) top = 0;
 
     // if size count is 1/4 length decrease size 
-    if(this->count == this->length/4){
-        this->decreaseSize();
+    if(count == length/4){
+        decreaseSize();
     }
 
-    this->count--;
+    count--;
 
     return popped;
 }
 
 int DequeA::removeLast(){
     // Ensure deque is not empty before attempting to remove value
-    if(this->count == 0) return -1;
+    if(count == 0) return -1;
 
-    int popped = this->deque[this->bottom];
-    this->deque[this->bottom] = -1;
+    int popped = deque[bottom];
+    deque[bottom] = -1;
 
     // if size count is 1/4 length decrease size 
-    if(this->count == this->length/4){
-        this->decreaseSize();
+    if(count == length/4){
+        decreaseSize();
     }
 
-    this->bottom--;
-    this->count--;
+    bottom--;
+    count--;
     return popped;
 }
 
 void DequeA::show(){
 
     // Iterate through list and print contents one at a time
-    for(int i = 0; i < this->length; i++){
-        std::cout << this->deque[i] << " ";
+    for(int i = 0; i < length; i++){
+        std::cout << deque[i] << " ";
     }
 
     std::cout << std::endl;
 }
 
-int DequeA::size() { return this->count; }
+int DequeA::size() { return count; }
 
-int DequeA::arrayLength() { return this->length; }
+int DequeA::arrayLength() { return length; }
 
 /* Private Methods */
 
-//TODO: Double check bottom is being set correctly after resize
 void DequeA::increaseSize(){
-    this->length = this->length*2;
+    length = length*2;
 
     // Delete old deque from memory to prevent memory leaks
-    this->deque = this->copyArray();
-    this->top = 0;
-    this->insertFlag = 1;
-    this->bottom = this->count;
+    deque = copyArray();
+    top = 0;
+    bottom = count - 1;
 }
 
 void DequeA::decreaseSize(){
-    this->length = this->length / 2;
+    length = length / 2;
 
-    this->deque = this->copyArray();
-    this->top = 0;
-    this->insertFlag = 1;
-    this->bottom = this->count;
+    deque = copyArray();
+    top = 0;
+    bottom = count;
 }
 
 int* DequeA::copyArray(){
 
     // Create new array for deque
-    int* new_deque = new int[this->length];
+    int* new_deque = new int[length];
     
     // Move items into new array
-    for(int i = 0; i < this->count; i++){
+    for(int i = 0; i < count; i++){
         // Reset top if needed since using a circular array
-        if(this->top >= this->count) this->top = 0;
+        if(top >= count || top < 0) top = 0;
 
         // move items from top to bottom
-        new_deque[i] = this->deque[top];
-        this->top++;
+        new_deque[i] = deque[top];
+        top++;
+    }
+
+    // TODO: Remove once templates are implemented
+    for(int i = count; i < length; i++){
+        new_deque[i] = -1;
     }
 
     // Delete old deque array pointer
-    delete[] this->deque;
+    delete[] deque;
     return new_deque;
 }

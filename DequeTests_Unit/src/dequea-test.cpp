@@ -18,6 +18,11 @@ TEST_CASE("DequeA Tests", "[AddLast]"){
         REQUIRE(deque.size() == 3);
     }
 
+    SECTION("AddLast_ValidateCyclicInsert"){
+
+        REQUIRE(1 == 1);
+    }
+
     SECTION("AddFirst"){
         // Arrange 
 
