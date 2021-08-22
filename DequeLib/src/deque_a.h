@@ -112,14 +112,6 @@ private:
      * @return
      */
     void decreaseSize();
-
-    /**
-     * Copy array contents from deque into new array
-     * 
-     * @param
-     * @return pointer to newly created array
-     */
-    int* copyArray();
 };
 
 #endif
