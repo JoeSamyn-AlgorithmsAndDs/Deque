@@ -14,7 +14,7 @@ DequeA::DequeA(){
 
 // Cleanup pointers
 DequeA::~DequeA(){
-    delete[] this->deque;
+    delete[] deque;
 }
 
 /* Public method implementations */
@@ -22,65 +22,124 @@ DequeA::~DequeA(){
 void DequeA::addLast(int item){
     
     // Array full, double size and move elements
-    if(this->count == this->length){
-        this->increaseSize();
-    }
+    if(count == length) increaseSize();
+
+    // If bottom at last index, check if item can be added to front of array
+    if(bottom == length - 1) bottom = 0;
+    else bottom++;
 
     // Add item
-    this->deque[this->bottom] = item;
-    this->bottom++;
-    this->count++;
+    deque[bottom] = item;
+    count++;
 }
 
 void DequeA::addFirst(int item){
 
-    // Increase size if array is full using repeated doubling
-    if(this->count == this->length){
-        this->increaseSize();
-    }
+    // If array full, resize
+    if(count == length) increaseSize();
 
-    // Flip flag to start adding from back of array
-    if(this->top == 0){
-        this->insertFlag = this->insertFlag * -1;
-        this->top = 0;
-    }
+    if(top <= 0) top = length - 1;
+    else top--;
 
-    this->deque[this->top] = item;
-    this->top += this->insertFlag;
-    this->count++;
+    // Insert item into deque and increment count
+    deque[top] = item;
+    count++;
+}
+
+int DequeA::removeFirst(){
+
+    // Check count != 0
+    if(count == 0) return -1;
+
+    int item = deque[top];
+    deque[top] = -1;
+
+    if(top == length - 1) top = 0;
+    else top++;
+
+    count--;
+
+    // if size count is 1/4 length decrease size 
+    if(count == length/4){
+        decreaseSize();
+    }
+    
+    return item;
+}
+
+int DequeA::removeLast(){
+    // Verify deque is not empty
+    if(count == 0) return -1;
+
+    // remove item and move bottom index to next available value
+    int item = deque[bottom];
+    if(bottom == 0) bottom = length - 1;
+    else bottom--;
+
+    count--;
+
+    // resize if needed
+    if(count == length/4) decreaseSize();
+
+    return item;
 }
 
 void DequeA::show(){
 
     // Iterate through list and print contents one at a time
-    for(int i = 0; i < this->count; i++){
-        std::cout << this->deque[i] << " ";
+    for(int i = 0; i < length; i++){
+        std::cout << deque[i] << " ";
     }
 
     std::cout << std::endl;
 }
 
-int DequeA::size() { return this->count; }
+int DequeA::size() { return count; }
+
+int DequeA::arrayLength() { return length; }
 
 /* Private Methods */
 
 void DequeA::increaseSize(){
-    this->length = this->length*2;
-    int* new_deque = new int[this->length];
-    
+    length = length*2;
+
+    // Create new array for deque
+    int* new_deque = new int[length];
+
     // Move items into new array
-    for(int i = 0; i <= this->count; i++){
+    for(int i = 0; i < count; i++){
         // Reset top if needed since using a circular array
-        if(this->top >= this->count) this->top = 0;
+        if(top >= count || top < 0) top = 0;
 
         // move items from top to bottom
-        new_deque[i] = this->deque[top];
-        this->top++;
+        new_deque[i] = deque[top];
+        top++;
     }
 
-    // Delete old deque from memory to prevent memory leaks
-    delete[] this->deque;
-    this->deque = new_deque;
-    this->top = 0;
-    this->bottom = this->count;
+    // TODO: Remove once templates are implemented
+    for(int i = count; i < length; i++){
+        new_deque[i] = -1;
+    }
+
+    // Delete old deque array pointer
+    delete[] deque;
+    deque = new_deque;
+    top = 0;
+    bottom = count - 1;
+}
+
+void DequeA::decreaseSize(){
+    length = length / 2;
+
+    int* new_deque = new int[length];
+    for(int i = 0; i < count; i++){
+        if(top == length) top = 0;
+        new_deque[i] = deque[top];
+        top++;
+    }
+
+    delete[] deque;
+    deque = new_deque;
+    top = 0;
+    bottom = count;
 }

@@ -31,13 +31,6 @@ private:
     int length;
 
     /**
-     * Flag used to insert items in the top of the deque. 
-     * Gets flipped to negative one when top index moves to back of array
-     * to allow ciclical insert
-     */
-    int insertFlag;
-
-    /**
      *  Array pointer that points to underlying array being used for deque implementation
      */
     int* deque;
@@ -94,6 +87,14 @@ public:
      */
     void show();
 
+    /**
+     * Get the length of the underlying array data structure
+     * 
+     * @param
+     * @return length of array
+     */
+    int arrayLength();
+
 /* Private Methods */
 private:
     /**
@@ -103,6 +104,14 @@ private:
      * @return
      */
     void increaseSize();
+
+    /**
+     * Decrease the size of the array to half its current length
+     * 
+     * @param
+     * @return
+     */
+    void decreaseSize();
 };
 
 #endif
